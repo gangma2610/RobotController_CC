@@ -161,9 +161,6 @@ private:
     int m_sockfd;
     // 用于接收数据时作为缓存空间，空间大小可适当进行调节。
     mutable char m_buffer[256];
-
-
-
 };
 
 
