@@ -40,11 +40,8 @@ RobotController::RobotController()
     }
 
     this->SendOK();
-
-
-
-
 }
+
 RobotController::~RobotController()
 {
     close(m_sockfd);
@@ -56,7 +53,6 @@ void RobotController::PrintLog(const std::string& log) const
     std::cout << log << std::endl;
 }
 
-//
 void RobotController::SendOK()
 {
     //write(m_sockfd, "OK", 2);
@@ -155,7 +151,7 @@ void RobotController::ClosePaw(int pulseCnt) const
     Send(msg);
 }
 
-void RobotController::SetSpeed(int rate)
+void RobotController::SetSpeed(int rate) const
 {
     PrintLog("CMD = 8 : set speed, rate = " + std::to_string(rate));
     std::string msg = "8," + std::to_string(rate) + ",";

@@ -114,7 +114,7 @@ public:
      * 参数：
      *  rate:     速度等级（1-10），即设置速度为原速度的speed_rate/10。
      **************************************************************/
-    void SetSpeed(int rate = 10);
+    void SetSpeed(int rate = 10) const;
 
     /***************************************************************
      * PrintLog：
@@ -160,7 +160,7 @@ private:
     // socket通信的id。
     int m_sockfd;
     // 用于接收数据时作为缓存空间，空间大小可适当进行调节。
-    char m_buffer[256];
+    mutable char m_buffer[256];
 
 
 
