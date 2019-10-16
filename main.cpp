@@ -6,10 +6,22 @@ int main() {
     cout << "connecting..." << endl;
     RobotController controller;
     // 获取笛卡尔坐标
-    //controller.GetCurrentCarPos();
+    //vector<double> carpos = controller.GetCurrentCarPos();
+    /*
+    for (int i = 0; i < 6; ++i) {
+        cout << carpos[i] << " ";
+    }
+    cout << endl;
+     */
 
     // 获取关节坐标
-    //controller.GetCurrentAxisPos();
+    //vector<double> axispos = controller.GetCurrentAxisPos();
+    /*
+    for (int i = 0; i < 6; ++i) {
+        cout << axispos[i] << " ";
+    }
+    cout << endl;
+     */
 
     // 笛卡尔运动
     //vector<double> initPos{400.1875, 100.232, 510.003, 180.00032, 0.0003, 0};

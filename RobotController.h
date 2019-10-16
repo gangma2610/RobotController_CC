@@ -154,7 +154,7 @@ protected:
      *
      * 返回值：接收到的数据
      **************************************************************/
-    std::string Receive() const;
+    std::string Receive(int n = 256) const;
 
 private:
     // socket通信的id。

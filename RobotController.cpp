@@ -14,6 +14,7 @@
 #include<string.h>
 #include<netinet/in.h>
 #include<unistd.h>
+#include<math.h>
 
 
 
@@ -99,10 +100,12 @@ std::vector<double> RobotController::GetCurrentCarPos() const
     Send("7,");
     std::vector<double> pos;
     for (int i = 0; i < 6; ++i) {
-        std::string data = Receive();
-        std::cout << data << std::endl;
+        std::string data = Receive(7);
+        //std::cout << data << std::endl;
         pos.push_back(String2Double(data));
     }
+
+    return pos;
 }
 
 void RobotController::MoveByAxis(const std::vector<double> &axisPos) const
@@ -131,10 +134,12 @@ std::vector<double> RobotController::GetCurrentAxisPos() const
     Send("6,");
     std::vector<double> pos;
     for (int i = 1; i <= 6; ++i) {
-        std::string data = Receive();
-        std::cout << data << std::endl;
+        std::string data = Receive(7);
+        //std::cout << data << std::endl;
         pos.push_back(String2Double(data));
     }
+
+    return pos;
 }
 
 void RobotController::OpenPaw(int pulseCnt) const
@@ -163,11 +168,10 @@ void RobotController::Send(const std::string& s) const
     write(m_sockfd, s.c_str(), s.length());
 }
 
-
-std::string RobotController::Receive() const
+std::string RobotController::Receive(int n) const
 {
     memset((void*)m_buffer, 0, sizeof(m_buffer));
-    read(m_sockfd, (void*)m_buffer, sizeof(m_buffer));
+    read(m_sockfd, (void*)m_buffer, n);
     //printf("m_buffer = %s\n", m_buffer);
     return std::string(m_buffer);
 }
