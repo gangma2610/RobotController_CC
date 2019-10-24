@@ -33,6 +33,7 @@ RobotController::RobotController()
     addr.sin_port = htons(9876); //Port
 
     addr.sin_addr.s_addr = inet_addr("192.168.39.220"); //Ip
+
     int res = connect(m_sockfd, (struct sockaddr*)&addr, sizeof(addr));
     if(res == -1)  // connect failed!
     {
@@ -41,6 +42,7 @@ RobotController::RobotController()
     }
 
     this->SendOK();
+
 }
 
 RobotController::~RobotController()
@@ -91,7 +93,7 @@ void RobotController::MoveCarByOffset(const std::vector<double> & offset) const
     sprintf((char*)m_buffer, "3,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,", offset[0], offset[1], offset[2], offset[3], offset[4], offset[5]);
     std::string msg(m_buffer);
     PrintLog("car offset =  " + msg);
-    Send(msg);
+    //Send(msg);
 }
 
 std::vector<double> RobotController::GetCurrentCarPos() const
@@ -122,10 +124,29 @@ void RobotController::MoveAxisByOffset(const std::vector<double> &offset) const
 {
     PrintLog("CMD = 2 : move by offset in axis");
     memset((void*)m_buffer, 0, sizeof(m_buffer));
-    sprintf((char*)m_buffer, "2,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,", offset[0], offset[1], offset[2], offset[3], offset[4], offset[5]);
+    sprintf((char*)m_buffer, "2,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+            offset[0], offset[1], offset[2], offset[3], offset[4], offset[5]);
     std::string msg(m_buffer);
     PrintLog("axis offset =  " + msg);
     Send(msg);
+}
+
+void RobotController::MoveByJointTrajectory(std::vector< std::vector<double> > trajectoryPoints) const
+{
+    PrintLog("CMD = 9 : move by joint trajectory points");
+    std::string sendData = "9," + std::string(std::to_string(trajectoryPoints.size())) + ",";
+    for (int i = 0; i < trajectoryPoints.size(); ++i) {
+        memset((void*)m_buffer, 0, sizeof(m_buffer));
+        sprintf((char*)m_buffer, "%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,",
+                trajectoryPoints[i][0], trajectoryPoints[i][1], trajectoryPoints[i][2],
+                trajectoryPoints[i][3], trajectoryPoints[i][4], trajectoryPoints[i][5]
+                );
+        std::string msg(m_buffer);
+        sendData += msg;
+    }
+    PrintLog("joint trajectory points = " + sendData);
+    Send(sendData);
+
 }
 
 std::vector<double> RobotController::GetCurrentAxisPos() const

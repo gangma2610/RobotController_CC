@@ -82,6 +82,15 @@ public:
     void MoveAxisByOffset(const std::vector<double> &offset) const;
 
     /***************************************************************
+     * MoveByJointTrajectory：
+     *  向机械臂发送9，通过关节路点控制机械臂运动。
+     *
+     * 参数：
+     *  trajectoryPoints:     关节路点
+     **************************************************************/
+    void MoveByJointTrajectory(std::vector< std::vector<double> > trajectoryPoints) const;
+
+    /***************************************************************
      * GetCurrentAxisPos：
      *  向机械臂发送6，机械臂发送六个浮点数，即关节坐标值。
      *
