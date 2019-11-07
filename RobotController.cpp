@@ -84,6 +84,8 @@ void RobotController::MoveByCar(const std::vector<double> &carPos) const
     std::string msg(m_buffer);
     PrintLog("car pos =  " + msg);
     Send(msg);
+
+    this->Delay();
 }
 
 void RobotController::MoveCarByOffset(const std::vector<double> & offset) const
@@ -94,6 +96,8 @@ void RobotController::MoveCarByOffset(const std::vector<double> & offset) const
     std::string msg(m_buffer);
     PrintLog("car offset =  " + msg);
     //Send(msg);
+
+    this->Delay();
 }
 
 std::vector<double> RobotController::GetCurrentCarPos() const
@@ -118,6 +122,8 @@ void RobotController::MoveByAxis(const std::vector<double> &axisPos) const
     std::string msg(m_buffer);
     PrintLog("car pos =  " + msg);
     Send(msg);
+
+    this->Delay();
 }
 
 void RobotController::MoveAxisByOffset(const std::vector<double> &offset) const
@@ -129,6 +135,8 @@ void RobotController::MoveAxisByOffset(const std::vector<double> &offset) const
     std::string msg(m_buffer);
     PrintLog("axis offset =  " + msg);
     Send(msg);
+
+    this->Delay();
 }
 
 void RobotController::MoveByJointTrajectory(std::vector< std::vector<double> > trajectoryPoints) const
@@ -146,6 +154,8 @@ void RobotController::MoveByJointTrajectory(std::vector< std::vector<double> > t
     }
     PrintLog("joint trajectory points = " + sendData);
     Send(sendData);
+
+    this->Delay();
 
 }
 
@@ -182,6 +192,8 @@ void RobotController::SetSpeed(int rate) const
     PrintLog("CMD = 8 : set speed, rate = " + std::to_string(rate));
     std::string msg = "8," + std::to_string(rate) + ",";
     Send(msg);
+
+    this->Delay();
 }
 
 void RobotController::Send(const std::string& s) const
@@ -203,4 +215,9 @@ double RobotController::String2Double(const std::string& s) const
     double data;
     is >> data;
     return data;
+}
+
+void RobotController::Delay() const
+{
+    std::string data = this->Receive(5);
 }

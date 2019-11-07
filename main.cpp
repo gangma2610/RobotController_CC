@@ -7,6 +7,7 @@ int main() {
     RobotController controller;
 
     // 路点运动测试
+    cout << "" << endl;
     vector< vector<double> > trajectoryPoints;
     trajectoryPoints.push_back({0.1,0.0,0.0,0.0,0.1,0.0});
     trajectoryPoints.push_back({0.00, -14.06, 10.6, -4.24, 0, 83.56});
